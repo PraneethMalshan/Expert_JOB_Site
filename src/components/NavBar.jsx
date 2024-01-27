@@ -21,7 +21,7 @@ const NavBar = () => {
   return (
       <header className='container px-4 mx-auto max-w-screen-2xl xl:px-24'>
         <nav className='flex items-center justify-between py-6'>
-            <a href="/" className="flex items-center gap-2 text-2xl text-black">
+            <a href="/" className="flex items-center gap-2 text-2xl text-red-600">
                 <svg 
                     xmlns="http://www.w3.org/2000/svg"
                     width="29"
@@ -45,7 +45,7 @@ const NavBar = () => {
             {/* Nav items for large devices */}
             <ul className='hidden gap-12 md:flex'>
                 {navItems.map(({path, title}) => (
-                    <li key={path} className='text-base text-primary'>
+                    <li key={path} className='text-base text-white text-primary'>
                         <NavLink
                             to={path}
                             className={({ isActive }) => 
@@ -60,7 +60,7 @@ const NavBar = () => {
 
             {/* Sign up and Login */}
             <div className='hidden space-x-5 text-base font-medium text-primary lg:block'>
-                <Link to="/login" className="px-5 py-2 border rounded">Login</Link>
+                <Link to="/login" className="px-5 py-2 text-white border rounded">Login</Link>
                 <Link to="/sign-up" className="px-5 py-2 text-white bg-blue-600 border rounded" >Sign up</Link>
             </div>
 
@@ -75,6 +75,27 @@ const NavBar = () => {
             </div>
 
         </nav>
+
+        {/* navitems for mobile */}
+        <div className={`px-4 bg-black py-5 rounded-sm ${isMenuOpen ? "" : "hidden"}`}>
+            <ul>
+            {navItems.map(({path, title}) => (
+                    <li key={path} className="py-1 text-base text-white first:text-white">
+                        <NavLink
+                            to={path}
+                            className={({ isActive }) => 
+                            isActive ? "active" : "" 
+                            }
+                        >
+                            {title}
+                        </NavLink>
+                    </li>
+                ))}
+
+                <li className="py-1 text-white"><Link to="/login">Login</Link></li>
+
+            </ul>
+        </div>
       </header>
     
   )
