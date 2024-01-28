@@ -1,7 +1,7 @@
 import React from 'react'
 import InputField from '../components/InputField'
 
-const Location = ({handleChange}) =>  {
+const Location = ({ handleChange }) =>  {
   return (
     <div>
         <h4 className='mb-2 text-lg font-medium text-white'>Location</h4>

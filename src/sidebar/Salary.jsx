@@ -2,7 +2,7 @@ import React from 'react'
 import Button from './Button'
 import InputField from '../components/InputField'
 
-function Salary({handleChange, handleClick}) {
+function Salary({ handleChange, handleClick }) {
   return (
     <div>
       <h4 className='mb-2 text-lg font-medium text-white'>Salary</h4>

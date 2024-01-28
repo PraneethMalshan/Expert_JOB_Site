@@ -1,7 +1,7 @@
 import React from 'react'
 import InputField from '../components/InputField'
 
-function JobPostingData({handleChange}) {
+const JobPostingData = ({ handleChange }) => {
     const now = new Date();
     // console.log(now)
     const twentyFourHoursAgo = new Date( now - 24 * 60 * 60 * 1000);
