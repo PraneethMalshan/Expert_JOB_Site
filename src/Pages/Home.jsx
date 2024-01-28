@@ -1,29 +1,36 @@
 import {useEffect, useState} from 'react'
 import Banner from '../components/Banner'
-import { data } from 'autoprefixer';
 import Card from '../components/Card';
 import Jobs from './Jobs';
+import Sidebar from '../sidebar/Sidebar';
 
 const Home = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [jobs, setJobs] = useState([]);
+    const[jobs, setJobs] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+
 
     useEffect(() => {
+        setIsLoading(true);
         fetch("jobs.json").then(res => res.json()).then(data => {
             // console.log(data)
-            setJobs(data)
+            setJobs(data);
+            setIsLoading(false)
         })
     }, [])
 
-    console.log(jobs)
+    // console.log(jobs)
 
+    // hsndle input change
     const [query, setQuery] = useState("");
     const handleInputChange = (event) => {
         setQuery(event.target.value)
     }
 
 // Filter jobs title
-    const filteredItems = jobs.filter((jobs) => jobs.jobTitle.toLowerCase().indexOf(query.toLocaleLowerCase()) !== -1);
+    const filteredItems = jobs.filter((job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1);
 
 
     // ===Radio Filtering===
@@ -32,7 +39,7 @@ const Home = () => {
     }
 
     // ===Button based Filtering===
-    const andleClick = (event) => {
+    const handleClick = (event) => {
         setSelectedCategory(event.target.value)
     }
 
@@ -66,13 +73,24 @@ const Home = () => {
     <div>
         <Banner query={query} handleInputChange={handleInputChange}/>
 
-{/* Main Content */}
+        {/* Main Content */}
         <div className='bg-[#000000] md:grid grid-cols-4 gap-8 lg:px-24 px-4 py-12 ' >
             {/* Left Side */}
-            <div className='p-4 bg-[#121212] rounded'>Left</div>
+            <div className='p-4 bg-[#121212] rounded'>
+                <Sidebar handleChange={handleChange} handleClick={handleClick}/>
+            </div>
 
             {/* Job Cards */}
-            <div className='col-span-2 p-4 bg-[#121212] rounded-sm'><Jobs result={result}/></div>
+            <div className='col-span-2 p-4 bg-[#121212] rounded-sm'>
+                
+                {
+                    isLoading ? (<p className='font-medium text-white'>Loading.....</p>) : result.length > 0 ? (<Jobs result={result}/>) : <>
+                    <h3 className='mb-2 text-lg font-bold text-white'>{result.length} Jobs</h3>
+                    <p className='text-white'>No data found!</p>
+                    </>
+                }
+
+            </div>
             
             
             {/* Right Side */}
