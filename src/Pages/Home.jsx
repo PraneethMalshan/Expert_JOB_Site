@@ -3,6 +3,7 @@ import Banner from '../components/Banner'
 import Card from '../components/Card';
 import Jobs from './Jobs';
 import Sidebar from '../sidebar/Sidebar';
+import Newsletter from '../components/Newsletter';
 // import JobPostingData from '../sidebar/JobPostingData';
 
 const Home = () => {
@@ -147,7 +148,7 @@ const Home = () => {
             
             
             {/* Right Side */}
-            <div className='p-4 bg-[#121212] rounded'>Right</div>
+            <div className='p-4 bg-[#121212] rounded'><Newsletter/></div>
         </div>
     </div>
   )
