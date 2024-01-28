@@ -43,6 +43,30 @@ const Home = () => {
         setSelectedCategory(event.target.value)
     }
 
+
+    // ====Calculate the index range====
+    const calculatePageRange = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return {startIndex, endIndex};
+    }
+
+    // function for the next page
+    const nextPage = () => {
+        if(currentPage < Math.ceil(filteredItems.length / itemsPerPage)){
+            setCurrentPage(currentPage + 1);
+        }
+    }
+
+    // function for the previous page
+    const prevPage = () => {
+        if(currentPage > 1){
+            setCurrentPage(currentPage - 1);
+        }
+    }
+    
+    
+
     // Main function 
     const filteredData = (jobs, selected, query) => {
         let filteredJobs = jobs;
@@ -53,14 +77,19 @@ const Home = () => {
 
         // category filtering
         if(selected){
-            filteredJobs = filteredJobs.filter(({jobLocation, maxPrice, experienceLevel, salaryType, employmentType, postingDate}) => {
-                jobLocation.toLowerCase() <= selected.toLowerCase() ||
-                parseInt(maxPrice) === parseInt(selected) ||
+            filteredJobs = filteredJobs.filter(({jobLocation, maxPrice, experienceLevel, salaryType, 
+                employmentType, postingDate}) => (
+                jobLocation.toLowerCase() === selected.toLowerCase() ||
+                parseInt(maxPrice) <= parseInt(selected) ||
+                salaryType.toLowerCase() === selected.toLowerCase() ||
                 employmentType.toLowerCase() === selected.toLowerCase()
-            });
+            ));
             console.log(filteredJobs);
         }
 
+        // slice the data baased on current page
+        const {startIndex, endIndex} = calculatePageRange();
+        filteredJobs = filteredJobs.slice(startIndex, endIndex)
         return filteredJobs.map((data, i) => <Card key={i} data={data}/>)
 
 
@@ -88,6 +117,19 @@ const Home = () => {
                     <h3 className='mb-2 text-lg font-bold text-white'>{result.length} Jobs</h3>
                     <p className='text-white'>No data found!</p>
                     </>
+                }
+
+                {/* Pagination here */}
+                {
+
+                    result.length > 0 ? (
+                        <div className="flex justify-center mt-4 space-x-8 text-white">
+                            <button onClick={prevPage} disabled={currentPage === 1} className='hover:underline'>Previous</button>
+                            <span className='mx-2'>Page {currentPage} of {Math.ceil(filteredItems.length / itemsPerPage)}</span>
+                            <button onClick={nextPage} disabled={currentPage === Math.ceil(filteredItems.length / itemsPerPage)} className='hover:underline'>Next</button>
+                        </div>
+                    ) : ""                       
+
                 }
 
             </div>
