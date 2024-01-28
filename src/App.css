@@ -33,9 +33,12 @@ li {
 
 .card {
   margin: 20px;
-  border: 2px solid #ededed;
+  border: 1px solid #a40101 ;
+  background-color: #000000;
   padding: 20px;
   cursor: pointer;
+  border-bottom-left-radius: 30px;
+  border-top-right-radius: 30px;
 }
 
 
