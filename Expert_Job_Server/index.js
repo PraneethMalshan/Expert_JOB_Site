@@ -3,8 +3,8 @@ const app = express()
 const cors = require('cors')
 const port = process.env.PPORT || 3000
 require('dotenv').config()
-console.log(process.env.DB_USER)
-console.log(process.env.DB_PASSWORD)
+// console.log(process.env.DB_USER)
+// console.log(process.env.DB_PASSWORD)
 
 
 // middleware
@@ -35,6 +35,14 @@ async function run() {
     const db = client.db("expertJobSite");
     const jobsCollections = db.collection("demoJobs");
 
+    
+
+
+    // get all jobs
+    app.get("/all-jobs", async(req, res) => {
+        const jobs = await jobsCollections.find({}).toArray()
+        res.send(jobs);
+    })
 
 
 
