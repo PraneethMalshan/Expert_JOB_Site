@@ -32,7 +32,7 @@ async function run() {
     await client.connect();
 
     // create db
-    const db = client.db("ExpertJobSite");
+    const db = client.db("expertJobSite");
     const jobsCollections = db.collection("demoJobs");
 
 
