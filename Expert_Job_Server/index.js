@@ -35,7 +35,20 @@ async function run() {
     const db = client.db("expertJobSite");
     const jobsCollections = db.collection("demoJobs");
 
-    
+    // post a jobs
+    app.post("/post-job", async(req, res) => {
+        const body = req.body;
+        // console.log(body);
+        const result = await jobsCollections.insertOne(body);
+        if(result.insertedId){
+            return res.status(200).send(result);
+        }else{
+            return res.status(404).send({
+                message: "Can not insert! Try again later.!",
+                status: false
+            })
+        }
+    })
 
 
     // get all jobs
