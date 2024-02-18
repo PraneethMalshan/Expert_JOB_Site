@@ -11,7 +11,7 @@ const Card = ({data}) => {
 
     <section className='card'>
         <Link to={"/"} className='flex flex-col items-start gap-4 sm:flex-row'>
-            <img src={companyLogo} alt="" />
+            <img className='h-14 w-14' src={companyLogo} alt="" />
             <div>
                 <h4 className='mb-1 text-white'>{companyName}</h4>
                 <h3 className='mb-2 text-lg font-semibold text-white'>{jobTitle}</h3>
