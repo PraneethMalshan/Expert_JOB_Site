@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const port = process.env.PPORT || 3000
+const port = process.env.PORT || 3000;
 require('dotenv').config()
 // console.log(process.env.DB_USER)
 // console.log(process.env.DB_PASSWORD)
@@ -38,12 +38,13 @@ async function run() {
     // post a jobs
     app.post("/post-job", async(req, res) => {
         const body = req.body;
+        body.createAt = new Date();
         // console.log(body);
         const result = await jobsCollections.insertOne(body);
         if(result.insertedId){
             return res.status(200).send(result);
         }else{
-            return res.status(404).send({
+            return res.status(404).send({   
                 message: "Can not insert! Try again later.!",
                 status: false
             })
