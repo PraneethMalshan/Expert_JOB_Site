@@ -62,6 +62,7 @@ async function run() {
     app.get("/myJobs/:email", async(req, res) => {
         // console.log(req.params.email)
         const jobs = await jobsCollections.find({postedBy : req.params.email}).toArray();
+        res.send(jobs)
     })
 
 

@@ -34,7 +34,8 @@ const Home = () => {
     }
 
 // Filter jobs title
-    const filteredItems = jobs.filter((job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    const filteredItems = jobs.filter(
+        (job) => job.jobTitle.toLowerCase().indexOf(query.toLowerCase()) !== -1);
 
 
     // ===Radio Filtering===
