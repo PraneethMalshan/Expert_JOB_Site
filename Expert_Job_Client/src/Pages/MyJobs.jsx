@@ -16,8 +16,9 @@ const MyJobs = () => {
             .then((res) => res.json())
             .then((data) => {
                 setJobs(data);
+                setIsLoading(false);
         });
-    },[]);
+    },[searchText]);
 
     const handleSearch = () => {
         const filter = jobs.filter(
@@ -98,34 +99,38 @@ const MyJobs = () => {
           </tr>
         </thead>
 
-        <tbody>
-                {
-                    jobs.map((job, index) => (
-                        <tr key={index}>
-                            <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap text-blueGray-700 ">
-                                {index + 1}
-                            </th>
-                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap ">
-                            {job.jobTitle}
-                            </td>
-                            <td className="p-4 px-6 text-xs border-t-0 border-l-0 border-r-0 align-center whitespace-nowrap">
-                            {job.companyName}
-                            </td>
-                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                            ${job.minPrice}-${job.maxPrice}
-                            </td>
-                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                <button><Link to={`/edit-job/${job?._id}`}>Edit</Link></button>
-                            </td>
-                            <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                <button onClick={() => handleDelete(job._id)} className='px-6 py-2 text-white bg-red-700 rounded-sm'>Delete</button>
-                            </td>
-                        </tr>  
-                                          
-                    ))
-                }
-            </tbody>
-           
+        {
+            isLoading ? (<div className='flex items-center justify-center h-20'><p>loading......</p></div>) : (
+             
+                <tbody>
+                        {
+                            jobs.map((job, index) => (
+                                <tr key={index}>
+                                    <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap text-blueGray-700 ">
+                                        {index + 1}
+                                    </th>
+                                    <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap ">
+                                    {job.jobTitle}
+                                    </td>
+                                    <td className="p-4 px-6 text-xs border-t-0 border-l-0 border-r-0 align-center whitespace-nowrap">
+                                    {job.companyName}
+                                    </td>
+                                    <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                    ${job.minPrice}-${job.maxPrice}
+                                    </td>
+                                    <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                        <button><Link to={`/edit-job/${job?._id}`}>Edit</Link></button>
+                                    </td>
+                                    <td className="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                        <button onClick={() => handleDelete(job._id)} className='px-6 py-2 text-white bg-red-700 rounded-sm'>Delete</button>
+                                    </td>
+                                </tr>  
+                                                
+                            ))
+                        }
+                </tbody>
+            )
+        }
 
        
 
