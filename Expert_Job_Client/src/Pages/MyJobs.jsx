@@ -10,6 +10,10 @@ const MyJobs = () => {
     const [searchText, setSearchText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
 
+    // Set current page
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 4;
+
     useEffect(() => {
         setIsLoading(true);
         fetch(`http://localhost:3000/myJobs/praneeth@gmail.com`)
@@ -19,6 +23,25 @@ const MyJobs = () => {
                 setIsLoading(false);
         });
     },[searchText]);
+
+
+    // pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentJobs = jobs.slice(indexOfFirstItem, indexOfLastItem)
+
+    // next brn & previous btn
+    const nextPage = () => {
+        if(indexOfLastItem < jobs.length) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
+    const prevPage = () => {
+        if(currentPage > 1){
+            setCurrentPage(currentPage - 1)
+        }
+    }
+    
 
     const handleSearch = () => {
         const filter = jobs.filter(
@@ -104,7 +127,7 @@ const MyJobs = () => {
              
                 <tbody>
                         {
-                            jobs.map((job, index) => (
+                            currentJobs.map((job, index) => (
                                 <tr key={index}>
                                     <th className="p-4 px-6 text-xs text-left align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap text-blueGray-700 ">
                                         {index + 1}
@@ -138,22 +161,22 @@ const MyJobs = () => {
     </div>
   </div>
 </div>
-<footer className="relative pt-8 pb-6 mt-16">
-  <div className="container px-4 mx-auto">
-    <div className="flex flex-wrap items-center justify-center md:justify-between">
-      <div className="w-full px-4 mx-auto text-center md:w-6/12">
-        <div className="py-1 text-sm font-semibold text-blueGray-500">
-          Made with <a href="https://www.creative-tim.com/product/notus-js" className="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" className="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+
+{/* Pagination */}
+<div className='flex justify-center mb-8 space-x-8 text-white'>
+    {
+        currentPage > 1 && (
+            <button className='hover:underline' onClick={prevPage}>Previous</button>
+        )
+    }
+    {
+        indexOfLastItem < jobs.length && (
+            <button className='hover:underline' onClick={nextPage}>Next</button>
+        )
+    }
+</div>
+
 </section>
-
-
-
-
     </div>
   )
 };
