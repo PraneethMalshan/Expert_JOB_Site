@@ -14,7 +14,7 @@ app.use(cors())
 // praneethmalshan12345  - username
 // 9Z4wa7Sur46jL5WM  - pw
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@expressjobsite.o3lz1dy.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -65,6 +65,14 @@ async function run() {
         res.send(jobs)
     })
 
+
+    // delete a job
+    app.delete("/job/:id", async(req, res) => {
+        const id = req.params.id;
+        const filter = {_id: new ObjectId(id)}
+        const result = await jobsCollections.deleteOne(filter);
+        res.send(result)
+    })
 
 
     // Send a ping to confirm a successful connection

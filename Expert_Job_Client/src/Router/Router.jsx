@@ -17,11 +17,11 @@ const router = createBrowserRouter([
           element:<CreateJob/>
         },
         {
-          path: "/my-Job",
+          path: "/my-job",
           element:<MyJobs/>
-        }
+        },
         
-      ]
+      ],
     },
   ]);
 
